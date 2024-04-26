@@ -35,16 +35,23 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import router from "../router/index.js";
+import Cookies from "js-cookie";
 
 const email = ref("");
 const password = ref("");
 
 async function login() {
-    let res = await axios.post("http://hakaton-api.test/api/v1/auth/login", {
-        email: email.value,
-        password: password.value,
-    });
-    console.log(res);
+    try {
+        let res = await axios.post("http://hakaton-api.test/api/v1/auth/login", {
+            email: email.value,
+            password: password.value,
+        });
+        router.push("/");
+        Cookies.set(res.data.token);
+    } catch(error) {
+        console.error(error);
+    }
 }
 
 const passwordVisible = ref(false);

@@ -42,6 +42,8 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import router from "../router/index.js";
+import Cookies from "js-cookie";
 
 const passwordVisible = ref(false);
 
@@ -51,16 +53,19 @@ const lastName = ref("");
 const password = ref("");
 
 async function register() {
-    let res = await axios.post(
-        "http://hakaton-api.test/api/v1/auth/register",
+    try {
+        let res = await axios.post("http://hakaton-api.test/api/v1/auth/register",
         {
             first_name: firstName.value,
             last_name: lastName.value,
             email: email.value,
             password: password.value,
-        }
-    );
-
+        });
+        router.push("/");
+        Cookies.set(res.data.token);
+    } catch (error) {
+        console.error(error);
+    }
     console.log("res", res);
 }
 </script>
@@ -75,7 +80,7 @@ body {
     padding: 8%;
 }
 .forma {
-    margin-top: 200px;
+    margin-top: 200px; 
     z-index: 1;
     text-align: center;
     position: fixed;
