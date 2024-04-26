@@ -18,6 +18,12 @@
                 v-if="store.language === 'sr'"
                 @click="store.language = 'en'"
             />
+            <div class="menu">
+                <img id="pfp" src="../icons/logo.png" alt="" @click="Func">
+                <div v-if="isVisible" id="dropdown">
+                    <button @click="logOut">Odjavi se</button>
+                </div>
+            </div>
         </div>
     </nav>
 </template>
@@ -27,13 +33,37 @@ import useStore from "@/stores/main";
 import IconEn from "../icons/flags/gb.svg";
 import IconSr from "../icons/flags/rs.svg";
 import Logo from "../icons/logo.png?url"
+import {ref} from "vue";
+import Cookies from "js-cookie";
 
 const store = useStore();
+const isVisible = ref(false);
+
+function logOut() {
+    Cookies.remove("user_token");
+}
+
+function Func() {
+    isVisible.value = !isVisible.value;
+}
 
 </script>
 
 <style scoped lang="scss">
-
+#dropdown {
+    position: absolute;
+}
+#dropdown.show {
+    display: flex;
+}
+.menu {
+    position: relative;
+    > img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+}
 nav {
 
     --color: #184e3f;
@@ -69,7 +99,8 @@ nav {
     }
 
     .right{
-
+        display: flex;
+        gap: 10px;
         svg{
             overflow: hidden;
             border-radius: 50%;
