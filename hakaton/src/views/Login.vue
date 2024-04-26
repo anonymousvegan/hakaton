@@ -12,8 +12,7 @@
                     <input
                         type="email"
                         placeholder="E-mail"
-                        name="email"
-                        value=""
+                        v-model = "email"
                     />
                 </div>
 
@@ -21,10 +20,10 @@
                     <input
                         :type="passwordVisible ? 'password' : 'text'"
                         placeholder="Lozinka"
-                        name="password"
                         autocomplete="on"
                         class="password-input"
                         id="password-input"
+                        v-model="password"
                     />
                     <span
                         class="toggle-password"
@@ -34,13 +33,22 @@
                     </span>
                 </div>
 
-                <button class="btn" type="submit">Prijavite se</button>
+                <button class="btn" @click="login" type="submit">Prijavite se</button>
             </form>
         </div>
     </div>
 </template>
 <script setup>
 import { ref } from "vue";
+import axios from "axios";
+
+async function login() {
+    let res = await axios.post("http://hakaton-api.test/api/v1/auth/login", {
+        email,
+        password,
+    });
+    console.log(res);
+}
 
 const passwordVisible = ref(false);
 </script>
