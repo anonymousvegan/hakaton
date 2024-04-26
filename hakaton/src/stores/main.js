@@ -1,12 +1,22 @@
-import { ref, computed, watch } from 'vue'
+
+import axios from 'axios'
 import { defineStore } from 'pinia'
+import { ref, computed, watch } from 'vue'
 
-export const useCounterStore = defineStore('counter', () => {
+const useStore = defineStore("mainStore", () => {
 
-  const language = ref("en");
+    const language = ref("");
+    const supportedLanguages = ["en", "sr"];
 
-  watch(language, (newLang) => {
-    localStorage.setItem("lang", newLang)
-  })
+    watch(language, (newLang) => {
+        localStorage.setItem("lang", newLang);
+    });
+
+    return {
+        language,
+        supportedLanguages,
+    }
 
 })
+
+export default useStore;
