@@ -10,9 +10,10 @@
   },
   "dependencies": {
     "axios": "^1.6.8",
-    "flag-icons": "^7.2.1",
     "pinia": "^2.1.7",
+    "vite-svg-loader": "^5.1.0",
     "vue": "^3.4.21",
+    "vue-flag-icon": "^2.1.0",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
