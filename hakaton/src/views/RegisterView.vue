@@ -32,7 +32,7 @@
 
                 <div class="password-container">
                     <input
-                        type="password"
+                        :type="passwordVisible ? 'password' : 'text'"
                         placeholder="Lozinka*"
                         name="password"
                         autocomplete="on"
@@ -41,7 +41,7 @@
                     />
                     <span
                         class="toggle-password"
-                        onclick="togglePasswordVisibility()"
+                        @click="passwordVisible = !passwordVisible"
                     >
                         <i class="fas fa-eye-slash" id="eye-icon"></i>
                     </span>
@@ -54,20 +54,11 @@
 </template>
 
 <script setup>
-function togglePasswordVisibility() {
-    var passwordInput = document.getElementById("password-input");
-    var eyeIcon = document.getElementById("eye-icon");
 
-    if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        eyeIcon.classList.remove("fa-eye-slash");
-        eyeIcon.classList.add("fa-eye");
-    } else {
-        passwordInput.type = "password";
-        eyeIcon.classList.remove("fa-eye");
-        eyeIcon.classList.add("fa-eye-slash");
-    }
-}
+import { ref } from 'vue';
+
+const passwordVisible = ref(false)
+
 </script>
 
 <style scoped>

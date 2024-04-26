@@ -1,4 +1,5 @@
 <template>
+    <Header />
     <div class="card-header">
         <p class="card-header-p">
             Samo oni koji se usude da sanjaju velike snove, mogu ostvariti
@@ -26,7 +27,10 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import Header from '@/components/Header.vue';
+
+</script>
 
 <style lang="scss">
 * {
