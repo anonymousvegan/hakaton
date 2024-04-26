@@ -1,12 +1,7 @@
 <template>
     <div class="login-page">
         <div class="forma">
-            <form
-                action=""
-                class="register-form"
-                method="POST"
-                enctype="multipart/form-data"
-            >
+
                 <h2>DOBRODOŠLI</h2>
                 <div>
                     <input
@@ -34,7 +29,6 @@
                 </div>
 
                 <button class="btn" @click="login" type="submit">Prijavite se</button>
-            </form>
         </div>
     </div>
 </template>
@@ -42,10 +36,13 @@
 import { ref } from "vue";
 import axios from "axios";
 
+const email = ref("");
+const password = ref("");
+
 async function login() {
     let res = await axios.post("http://hakaton-api.test/api/v1/auth/login", {
-        email,
-        password,
+        email: email.value,
+        password: password.value,
     });
     console.log(res);
 }
