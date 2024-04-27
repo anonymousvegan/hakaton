@@ -20,16 +20,30 @@
                     @click="store.language = 'en'"
                 />
 
-                <div class="menu">
-                    <i v-if="isLog === false" class="fas fa-power-off" @click="Func"></i>
-                    <i v-if="isLog === true" class="fa-solid fa-user" @click="Func"></i>
-                    <div v-if="isVisible" id="dropdown">
-                        <button @click="logOut">odjavi se</button>
+            </template>
+            <div class="menu">
+                <i class="fas fa-bars" @click="openMenu"></i>
+                <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" @click="closeMenu()">&times;</a>
+                    <a href="#">Log out</a>
+                    <a>Zivotinje</a>
+                    <div class="progress">
+                        <div class="inner"></div>
+                    </div>
+                    <a>Povrce</a>
+                    <div class="progress">
+                        <div class="inner"></div>
+                    </div>
+                    <a>Voce</a>
+                    <div class="progress">
+                        <div class="inner"></div>
+                    </div>
+                    <a>Predmeti</a>
+                    <div class="progress">
+                        <div class="inner"></div>
                     </div>
                 </div>
-
-            </template>
-
+            </div>
         </div>
     </nav>
 </template>
@@ -50,11 +64,12 @@ const isLog = ref(false);
 function logOut() {
     Cookies.remove("user_token");
 }
-
-function Func() {
-    isVisible.value = !isVisible.value;
+function openMenu() {
+    document.getElementById("mySidenav").style.width = "250px";
 }
-
+function closeMenu() {
+    document.getElementById("mySidenav").style.width = "0";
+}
 </script>
 
 <style scoped lang="scss">
@@ -64,11 +79,50 @@ function Func() {
 #dropdown.show {
     display: flex;
 }
+ .sidenav {
+  height: 100%; 
+  width: 0; 
+  position: fixed; 
+  z-index: 1; 
+  top: 0; 
+  right: 0;
+  background-color: #111; 
+  overflow-x: hidden; 
+  padding-top: 60px; 
+  transition: 0.5s; 
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+} 
 .menu {
     position: relative;
     > i {
         font-size: 30px;
-        color: rgb(134, 134, 134);
+        color: white;
     }
 }
 nav {
