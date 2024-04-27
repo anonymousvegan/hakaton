@@ -73,48 +73,21 @@ const currentIndex = ref(0);
 const playing = ref(false);
 const currentImage = ref(null);
 const image = ref(null);
-con
 
 const currentWordsArray = computed(() => {
     if (activeCategory.value === "animals") {
         let arr = [
-            "Dog",
-            "Cow",
-            "Cat",
-            "Horse",
-            "Donkey",
-            "Tiger",
-            "Lion",
-            "Panther",
-            "Leopard",
-            "Cheetah",
-            "Bear",
-            "Elephant",
-            "Turtle",
-            "Crocodile",
-            "Rabbit",
-            "Pigeon",
-            "Albatross",
-            "Crow",
-            "Fish",
-            "Dolphin",
-            "Frog",
-            "Whale",
-            "Alligator",
-            "Eagle",
-            "Fox",
-            "Goat",
-            "Jackal",
-            "Emu",
-            "Armadillo",
-            "Goose",
-            "Wolf",
-            "Gorilla",
-            "Chimpanzee",
-            "Orangutan",
-            "Antelope",
-            "Bat",
-            "Giraffe",
+            "dog",
+            "cat",
+            "bird",
+            "horse",
+            "goat",
+            "panda",
+            "squirrel",
+            "rabbit",
+            "cow",
+            "fish",
+            "chicken"
         ];
 
         return arr;
@@ -125,8 +98,13 @@ const currentWordsArray = computed(() => {
     }
 
     if (activeCategory.value === "fruits") {
-        return ["apple", "banana", "orange", "peach", "pear"];
+        return ["apple", "banana", "orange", "peach", "pear", "strawberry", "raspberry", "blueberry", "blackberry", "lemon"];
     }
+
+    if (activeCategory.value === "objects") {
+        return ["house", "car", "school", "table", "chair", "bed", "glass", "mirror", "door", "window" ];
+    }
+
 });
 
 const currentWord = computed(() => {
