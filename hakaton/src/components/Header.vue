@@ -1,12 +1,11 @@
 <template>
     <nav>
         <div class="left">
+
+            <h1>Smarty</h1>
             <div class="logo">
                 <img :src="Logo" alt="">
             </div>
-
-            <h1>BrainBridge</h1>
-
         </div>
         <div class="right">
 
@@ -87,13 +86,12 @@ nav {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        gap: 20px;
+        
 
         .logo{
-            width: 40px;
-            height: 40px;
+            width: 25px;
+            height: 25px;
             img{
-
                 width: 100%;
                 height: 100%;
 
@@ -102,7 +100,7 @@ nav {
 
         h1{
             font-size: 1.5rem;
-            color: var(--color);
+            color: rgb(255, 255, 255);
         }
     }
 
