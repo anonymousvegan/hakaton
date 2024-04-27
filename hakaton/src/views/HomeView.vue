@@ -21,6 +21,9 @@
                                 width: currentWord.length + 'ch',
                             }"
                         />
+                        <div>
+                            <div id="progressBar"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,7 +97,7 @@ const currentWordsArray = computed(() => {
     }
 
     if (activeCategory.value === "vegetables") {
-        return ["carrot", "pepper", "cucumber"];
+        return ["carrot", "pepper", "cucumber", "onion", "cabbage", "potato", "green peas", "garlic", "broccoli", "ginger"];
     }
 
     if (activeCategory.value === "fruits") {
@@ -112,6 +115,12 @@ const currentWord = computed(() => {
 });
 
 const currentWordInput = ref("");
+const progress = computed(() => {
+    if (isNaN(currentIndex.value) || isNaN(currentWordsArray.value.length)) {
+        return 0; 
+    }
+    return (currentIndex.value / currentWordsArray.value.length) * 100;
+});
 
 async function getImages(keyword) {
     const url = "https://api.unsplash.com/search/photos";
@@ -182,6 +191,12 @@ async function speakCurrentWord(){
 
     speechSynthesis.speak(utterance);
 }
+watch(progress, (newProgress) => {
+    let elem = document.getElementById("progressBar");
+    let wid = 0;
+    wid += progress.value;
+    elem.style.width = wid + "%";
+});
 
 watch(currentWordInput, (newWord) => {
     if (newWord.toLowerCase() === currentWord.value.toLowerCase()) {
