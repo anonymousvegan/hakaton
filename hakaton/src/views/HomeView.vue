@@ -1,8 +1,38 @@
 <template>
+
+    <div class="menu">
+        <i class="fas fa-bars" @click="openMenu"></i>
+        <div id="mySidenav" class="sidenav">
+            <a
+                href="javascript:void(0)"
+                class="closebtn"
+                @click="closeMenu()"
+                >&times;</a
+            >
+            <a href="#" v-if="0">Odjavi se</a>
+            <a>Životinje</a>
+            <div class="progress">
+                <div class="inner"></div>
+            </div>
+            <a>Povrće</a>
+            <div class="progress">
+                <div class="inner"></div>
+            </div>
+            <a>Voće</a>
+            <div class="progress">
+                <div class="inner"></div>
+            </div>
+            <a>Ostalo</a>
+            <div class="progress">
+                <div class="inner"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="content card-main">
         <Header />
         <div class="typed-container">
-            <h1 id="typed">Zaronite u čarobni svet boja, <br /> oblika i mašte</h1>
+            <h1 id="typed">Zaronite u čarobni svet boja, <br /> oblika i mašte.</h1>
         </div>
         <teleport to="body" v-if="playing">
             <div class="game-dialog">
@@ -128,10 +158,23 @@ import mirrorUrl from "../images/mirror.jpeg";
 import doorUrl from "../images/door.jpeg";
 import windowUrl from "../images/window.jpeg";
 import { useToast } from 'vue-toastification';
-
+import Cookies from "js-cookie";
 import fourUrl from "../images/4.jpeg"
 import xUrl from "../images/x.jpeg"
 import minusUrl from "../images/minus.jpeg"
+
+const isVisible = ref(false);
+const isLog = ref(false);
+
+function logOut() {
+    Cookies.remove("user_token");
+}
+function openMenu() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+function closeMenu() {
+    document.getElementById("mySidenav").style.width = "0";
+}
 
 const store = useStore();
 const toast = useToast();
@@ -337,6 +380,72 @@ onMounted(async () => {
     margin: 0;
     padding: 0;
 }
+
+
+#dropdown {
+    position: absolute;
+}
+#dropdown.show {
+    display: flex;
+}
+
+.menu {
+    z-index: 5;
+    position: fixed;
+    right: 30px;
+    top: 30px;
+    > i {
+        font-size: 30px;
+        color: white;
+        cursor: pointer;
+    }
+}
+
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+
 .card-main {
     clip-path: polygon(
         0% 0%,

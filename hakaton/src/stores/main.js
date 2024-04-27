@@ -1,7 +1,7 @@
 
 import axios from 'axios'
 import { defineStore } from 'pinia'
-import { ref, computed, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 const useStore = defineStore("mainStore", () => {
 
@@ -27,7 +27,7 @@ const useStore = defineStore("mainStore", () => {
         language,
         supportedLanguages,
         progress,
-        setProgressForUser,
+        setProgressForUser
     }
 
 })
