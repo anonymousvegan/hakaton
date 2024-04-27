@@ -275,7 +275,7 @@ watch(currentWordInput, async(newWord) => {
 
     if (newWord.toLowerCase() === currentWord.value.toLowerCase()) {
         if (currentIndex.value === currentWordsArray.value?.length - 1) {
-            stop();
+            stop(true);
         }
 
         currentIndex.value++;
@@ -306,9 +306,9 @@ watch(currentIndex, () => {
     }
 });
 
-function stop() {
+function stop(showToast) {
 
-    toast.info("Završili ste igru, čestitamo. Svoj napredak imate u denom meniju")
+    if(showToast) toast.info("Završili ste igru, čestitamo. Svoj napredak imate u denom meniju")
 
     activeCategory.value = "";
     currentIndex.value = 0;
@@ -318,7 +318,7 @@ function stop() {
 
 onMounted(async () => {
     window.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") stop();
+        if (e.key === "Escape") stop(false);
     });
 });
 
