@@ -42,6 +42,8 @@ const currentProgress = localStorage.getItem("progress")
 if(currentProgress){
     store.progress = JSON.parse(currentProgress);
 }
-else{
-    store.language = "sr";
-}
+
+if(!store.progress.animals) store.progress.animals = 0
+if(!store.progress.vegetables) store.progress.vegetables = 0
+if(!store.progress.fruits) store.progress.fruits = 0
+if(!store.progress.objects) store.progress.objects = 0

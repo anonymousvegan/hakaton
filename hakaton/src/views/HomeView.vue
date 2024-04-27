@@ -352,7 +352,7 @@ async function speakCurrentWord() {
 
     // Optional: Set other properties
     utterance.pitch = 1; // Range between 0 and 2
-    utterance.rate = 1; // Range between 0.1 and 10
+    utterance.rate = 2; // Range between 0.1 and 10
     utterance.volume = 1; // Range between 0 and 1
 
     utterance.onstart = () => console.log("Start speaking...");
@@ -413,8 +413,14 @@ function stop(showToast) {
 
     playing.value = false;
 }
+
 const overAllProgress = computed(() => {
-    let allVariable = Object.values(store.progress).reduce((ac, el) => ac + el);
+
+    let allVariable = 0;
+    if(store.progress.length){
+        allVariable = Object.values(store.progress).reduce((ac, el) => ac + el);
+    }
+
 
     let allLength =
         Object.values(images.animals).length +

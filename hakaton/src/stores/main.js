@@ -17,6 +17,8 @@ const useStore = defineStore("mainStore", () => {
     });
 
     watch(progress, () => {
+
+        console.log("setting up");
         localStorage.setItem("progress", JSON.stringify(progress.value))
     }, {
         deep: true
