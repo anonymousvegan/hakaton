@@ -129,8 +129,11 @@ import glassUrl from "../images/glas.jpeg";
 import mirrorUrl from "../images/mirror.jpeg";
 import doorUrl from "../images/door.jpeg";
 import windowUrl from "../images/window.jpeg";
+import { useToast } from 'vue-toastification';
+
 
 const store = useStore();
+const toast = useToast();
 
 const activeCategory = ref(null);
 const currentIndex = ref(0);
@@ -304,6 +307,9 @@ watch(currentIndex, () => {
 });
 
 function stop() {
+
+    toast.info("Završili ste igru, čestitamo. Svoj napredak imate u denom meniju")
+
     activeCategory.value = "";
     currentIndex.value = 0;
 
