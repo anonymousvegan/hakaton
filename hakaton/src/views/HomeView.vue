@@ -73,8 +73,6 @@
 
     </div>
 
-
-    <Footer />
 </template>
 
 <script setup>
@@ -131,6 +129,9 @@ import doorUrl from "../images/door.jpeg";
 import windowUrl from "../images/window.jpeg";
 import { useToast } from 'vue-toastification';
 
+import fourUrl from "../images/4.jpeg"
+import xUrl from "../images/x.jpeg"
+import minusUrl from "../images/minus.jpeg"
 
 const store = useStore();
 const toast = useToast();
@@ -302,7 +303,7 @@ watch(currentIndex, () => {
     store.setProgressForUser(activeCategory.value, currentIndex.value)
 
     if(currentIndex.value === Object.keys(currentWordsArray.value).length){
-        stop();
+        stop(true);
     }
 });
 
@@ -315,6 +316,12 @@ function stop(showToast) {
 
     playing.value = false;
 }
+
+watch( (currentImage) => {
+    if(currentImage)
+
+    speakCurrentWord();
+})
 
 onMounted(async () => {
     window.addEventListener("keydown", (e) => {
