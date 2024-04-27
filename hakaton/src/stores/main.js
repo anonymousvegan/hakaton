@@ -1,5 +1,4 @@
 
-import axios from 'axios'
 import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
 

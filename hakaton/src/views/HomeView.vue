@@ -1,30 +1,91 @@
 <template>
-
     <div class="menu">
         <i class="fas fa-bars" @click="openMenu"></i>
         <div id="mySidenav" class="sidenav">
-            <a
-                href="javascript:void(0)"
-                class="closebtn"
-                @click="closeMenu()"
+            <a href="javascript:void(0)" class="closebtn" @click="closeMenu()"
                 >&times;</a
             >
             <a href="#" v-if="0">Odjavi se</a>
             <a>Životinje</a>
+
             <div class="progress">
-                <div class="inner"></div>
+                <div
+                    class="inner"
+                    :style="{
+                        width:
+                            (store.progress?.animals /
+                                Object.keys(images.animals).length) *
+                                100 +
+                            '%',
+                    }"
+                ></div>
             </div>
+            <div class="progress-number">
+                {{ store.progress?.animals || 0 }} /
+                {{ Object.keys(images.animals).length || 0 }}
+            </div>
+
             <a>Povrće</a>
+
             <div class="progress">
-                <div class="inner"></div>
+                <div
+                    class="inner"
+                    :style="{
+                        width:
+                            (store.progress?.vegetables /
+                                Object.keys(images.vegetables).length) *
+                                100 +
+                            '%',
+                    }"
+                ></div>
             </div>
+            <div class="progress-number">
+                {{ store.progress?.vegetables || 0 }} /
+                {{ Object.keys(images.vegetables).length || 0 }}
+            </div>
+
             <a>Voće</a>
             <div class="progress">
-                <div class="inner"></div>
+                <div
+                    class="inner"
+                    :style="{
+                        width:
+                            (store.progress?.fruits /
+                                Object.keys(images.fruits).length) *
+                                100 +
+                            '%',
+                    }"
+                ></div>
+            </div>
+            <div class="progress-number">
+                {{ store.progress?.fruits || 0 }} /
+                {{ Object.keys(images.fruits).length || 0 }}
             </div>
             <a>Ostalo</a>
             <div class="progress">
-                <div class="inner"></div>
+                <div
+                    class="inner"
+                    :style="{
+                        width:
+                            (store.progress?.objects /
+                                Object.keys(images.objects).length) *
+                                100 +
+                            '%',
+                    }"
+                ></div>
+            </div>
+            <div class="progress-number">
+                {{ store.progress?.objects || 0 }} /
+                {{ Object.keys(images.objects).length || 0 }}
+            </div>
+
+            <div class="progress overall">
+                <div
+                    class="inner"
+                    :style="{
+                        width: overAllProgress,
+                    }"
+                ></div>
             </div>
         </div>
     </div>
@@ -32,16 +93,18 @@
     <div class="content card-main">
         <Header />
         <div class="typed-container">
-            <h1 id="typed">Zaronite u čarobni svet boja, <br /> oblika i mašte.</h1>
+            <h1 id="typed">
+                Zaronite u čarobni svet boja, <br />
+                oblika i mašte.
+            </h1>
         </div>
         <teleport to="body" v-if="playing">
             <div class="game-dialog">
                 <div class="dialog-content">
-
                     <div class="image-container">
                         <img :src="currentImage" alt="" ref="image" />
 
-                        <Volume @click="speakCurrentWord"  />
+                        <Volume @click="speakCurrentWord" />
                     </div>
 
                     <div class="input">
@@ -51,9 +114,6 @@
                             v-model="currentWordInput"
                             placeholder="Šta vidiš na slici?"
                         />
-                        <div>
-                            <div id="progressBar"></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -84,7 +144,6 @@
             </div>
         </div>
 
-
         <div class="card" @click="play('objects')">
             <div class="wrapper">
                 <img :src="houseUrl" alt="" />
@@ -100,9 +159,7 @@
                 <div class="play">Životinje</div>
             </div>
         </div> -->
-
     </div>
-
 </template>
 
 <script setup>
@@ -115,16 +172,16 @@ import carrotUrl from "../images/carrot.avif";
 import pepperUrl from "../images/pepper.jpeg";
 import cucumberUrl from "../images/cucumber.jpeg";
 import onionUrl from "../images/onion.jpeg";
-import  cabbageUrl from "../images/cabbage.jpeg";
-import  potatoUrl from "../images/potato.jpeg";
-import  green_peasUrl from "../images/green.jpeg";
-import  garlicUrl from "../images/garlic.jpeg";
-import  broccoliUrl from "../images/peas.jpeg";
-import  gingerUrl from "../images/ginger.jpg";
+import cabbageUrl from "../images/cabbage.jpeg";
+import potatoUrl from "../images/potato.jpeg";
+import green_peasUrl from "../images/green.jpeg";
+import garlicUrl from "../images/garlic.jpeg";
+import broccoliUrl from "../images/peas.jpeg";
+import gingerUrl from "../images/ginger.jpg";
 import cherryUrl from "../images/charry.jpeg";
 
 import dogUrl from "../images/dog.jpg";
-import birdUrl from "../images/bird.jpeg"
+import birdUrl from "../images/bird.jpeg";
 import catUrl from "../images/cat.jpeg";
 import horseUrl from "../images/horse.jpeg";
 import goatUrl from "../images/goat.jpeg";
@@ -135,9 +192,8 @@ import cow from "../images/cow.jpeg";
 import fish from "../images/fish.jpeg";
 import chicken from "../images/chicken.jpeg";
 
-
 import appleUrl from "../images/apple.webp";
-import bananaUrl from "../images/banana.jpeg"
+import bananaUrl from "../images/banana.jpeg";
 import orangeUrl from "../images/orange.jpeg";
 import peachUrl from "../images/peach.jpg";
 import pearUrl from "../images/pear.jpeg";
@@ -157,11 +213,11 @@ import glassUrl from "../images/glas.jpeg";
 import mirrorUrl from "../images/mirror.jpeg";
 import doorUrl from "../images/door.jpeg";
 import windowUrl from "../images/window.jpeg";
-import { useToast } from 'vue-toastification';
+import { useToast } from "vue-toastification";
 import Cookies from "js-cookie";
-import fourUrl from "../images/4.jpeg"
-import xUrl from "../images/x.jpeg"
-import minusUrl from "../images/minus.jpeg"
+import fourUrl from "../images/4.jpeg";
+import xUrl from "../images/x.jpeg";
+import minusUrl from "../images/minus.jpeg";
 
 const isVisible = ref(false);
 const isLog = ref(false);
@@ -186,104 +242,104 @@ const playing = ref(false);
 const image = ref(null);
 const currentWordInput = ref("");
 
+const images = {
+    animals: {
+        dog: dogUrl,
+        bird: birdUrl,
+        cat: catUrl,
+        horse: horseUrl,
+        goat: goatUrl,
+        panda: pandaUrl,
+        squirrel: squirrelUrl,
+        rabbit: rabbitUrl,
+        cow: cow,
+        fish: fish,
+        chicken: chicken,
+    },
+    vegetables: {
+        carrot: carrotUrl,
+        pepper: pepperUrl,
+        cucumber: cucumberUrl,
+        onion: onionUrl,
+        cabbage: cabbageUrl,
+        potato: potatoUrl,
+        green: green_peasUrl,
+        garlic: garlicUrl,
+        broccoli: broccoliUrl,
+        ginger: gingerUrl,
+        cherry: cherryUrl,
+    },
+    fruits: {
+        apple: appleUrl,
+        banana: bananaUrl,
+        orange: orangeUrl,
+        peach: peachUrl,
+        pear: pearUrl,
+        strawberry: strawberryUrl,
+        raspberry: raspberryUrl,
+        blueberry: blueberryUrl,
+        blackberry: blackberryUrl,
+        lemon: lemonUrl,
+    },
+    objects: {
+        bed: bedUrl,
+        house: houseUrl,
+        car: carUrl,
+        school: schoolUrl,
+        table: tableUrl,
+        chair: chairUrl,
+        glass: glassUrl,
+        mirror: mirrorUrl,
+        door: doorUrl,
+        window: windowUrl,
+    },
+};
+
 const currentWordsArray = computed(() => {
     if (activeCategory.value === "animals") {
-
-        let urls = {
-            dog: dogUrl,
-            bird: birdUrl,
-            cat: catUrl,
-            horse: horseUrl,
-            goat: goatUrl,
-            panda: pandaUrl,
-            squirrel: squirrelUrl,
-            rabbit: rabbitUrl,
-            cow: cow,
-            fish: fish,
-            chicken: chicken,
-        };
-
-        return urls;
+        return images.animals;
     }
 
     if (activeCategory.value === "vegetables") {
-
-        return {
-                carrot: carrotUrl,
-                pepper: pepperUrl,
-                cucumber: cucumberUrl,
-                onion: onionUrl,
-                cabbage: cabbageUrl,
-                potato: potatoUrl,
-                green: green_peasUrl,
-                garlic: garlicUrl,
-                broccoli: broccoliUrl,
-                ginger: gingerUrl,
-                cherry: cherryUrl
-            }
-
+        return images.vegetables;
     }
 
     if (activeCategory.value === "fruits") {
-
-        return {
-            apple: appleUrl,
-            banana: bananaUrl,
-            orange: orangeUrl,
-            peach: peachUrl,
-            pear: pearUrl,
-            strawberry: strawberryUrl,
-            raspberry: raspberryUrl,
-            blueberry: blueberryUrl,
-            blackberry: blackberryUrl,
-            lemon: lemonUrl,
-
-        }
-
+        return images.fruits;
     }
 
     if (activeCategory.value === "objects") {
-        return {
-            bed: bedUrl,
-            house: houseUrl,
-            car: carUrl,
-            school: schoolUrl,
-            table: tableUrl,
-            chair: chairUrl,
-            glass: glassUrl,
-            mirror: mirrorUrl,
-            door: doorUrl,
-            window: windowUrl,
-        }
+        return images.objects;
     }
-
 });
 
 const currentWord = computed(() => {
-
-
-    if(!currentWordsArray.value) return  "";
+    if (!currentWordsArray.value) return "";
 
     return Object.keys(currentWordsArray.value)[currentIndex.value] || "";
 });
 
 const currentImage = computed(() => {
     return currentWordsArray.value[currentWord.value];
-})
-
+});
 
 async function play(category) {
     playing.value = true;
 
     activeCategory.value = category;
 
-    currentIndex.value = store.progress[category] || 0;
+    let index = store.progress[category] || 0;
+
+    if (index === Object.keys(images[category]).length) index = 0;
+
+    store.setProgressForUser(activeCategory.value, index);
+
+    currentIndex.value = index;
 
     speakCurrentWord();
 }
 
-async function speakCurrentWord(){
-
+async function speakCurrentWord() {
     if (!window.speechSynthesis) {
         console.log("Web Speech API not supported in this browser.");
         return;
@@ -306,17 +362,15 @@ async function speakCurrentWord(){
     speechSynthesis.speak(utterance);
 }
 
-
-async function sleep(s = 100){
-    await new Promise(res => {
+async function sleep(s = 100) {
+    await new Promise((res) => {
         setTimeout(() => {
-            res()
+            res();
         }, s);
-    })
+    });
 }
 
-watch(currentWordInput, async(newWord) => {
-
+watch(currentWordInput, async (newWord) => {
     if (newWord.toLowerCase() === currentWord.value.toLowerCase()) {
         if (currentIndex.value === currentWordsArray.value?.length - 1) {
             stop(true);
@@ -324,9 +378,7 @@ watch(currentWordInput, async(newWord) => {
 
         currentIndex.value++;
         currentWordInput.value = "";
-    }
-    else if(newWord.length === currentWord.value.length){
-
+    } else if (newWord.length === currentWord.value.length) {
         image.value.style.transform = "translate(-5px)";
         await sleep(100);
         image.value.style.transform = "translate(5px)";
@@ -343,36 +395,45 @@ watch(currentWordInput, async(newWord) => {
 watch(currentIndex, () => {
     if (!playing.value) return;
 
-    store.setProgressForUser(activeCategory.value, currentIndex.value)
+    store.setProgressForUser(activeCategory.value, currentIndex.value);
 
-    if(currentIndex.value === Object.keys(currentWordsArray.value).length){
+    if (currentIndex.value === Object.keys(currentWordsArray.value).length) {
         stop(true);
     }
 });
 
 function stop(showToast) {
-
-    if(showToast) toast.info("Završili ste igru, čestitamo. Svoj napredak imate u denom meniju")
+    if (showToast)
+        toast.info(
+            "Završili ste igru, čestitamo. Svoj napredak imate u denom meniju"
+        );
 
     activeCategory.value = "";
     currentIndex.value = 0;
 
     playing.value = false;
 }
+const overAllProgress = computed(() => {
+    let allVariable = Object.values(store.progress).reduce((ac, el) => ac + el);
 
-watch( (currentImage) => {
-    if(currentImage)
+    let allLength =
+        Object.values(images.animals).length +
+        Object.values(images.fruits).length +
+        Object.values(images.vegetables).length +
+        Object.values(images.objects).length;
 
-    speakCurrentWord();
-})
+    return allVariable / allLength * 100 + "%";
+});
+
+watch((currentImage) => {
+    if (currentImage) speakCurrentWord();
+});
 
 onMounted(async () => {
     window.addEventListener("keydown", (e) => {
         if (e.key === "Escape") stop(false);
     });
 });
-
-
 </script>
 
 <style lang="scss">
@@ -380,7 +441,6 @@ onMounted(async () => {
     margin: 0;
     padding: 0;
 }
-
 
 #dropdown {
     position: absolute;
@@ -401,7 +461,6 @@ onMounted(async () => {
     }
 }
 
-
 .sidenav {
     height: 100%;
     width: 0;
@@ -413,13 +472,15 @@ onMounted(async () => {
     overflow-x: hidden;
     padding-top: 60px;
     transition: 0.5s;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color: #d3d3d3;
     display: block;
     transition: 0.3s;
 }
@@ -444,7 +505,6 @@ onMounted(async () => {
         font-size: 18px;
     }
 }
-
 
 .card-main {
     clip-path: polygon(
@@ -521,14 +581,14 @@ onMounted(async () => {
         content: "";
         position: absolute;
         inset: 0;
-        background-color: rgba($color: #000000, $alpha: 0.60);
+        background-color: rgba($color: #000000, $alpha: 0.6);
         z-index: -1;
     }
 }
 .typed-container {
     display: inline-block;
     margin-left: 50%;
-    margin-top:  5%;
+    margin-top: 5%;
 }
 
 #typed {
@@ -541,11 +601,14 @@ onMounted(async () => {
     animation-fill-mode: forwards;
     color: white;
     font-size: 3rem;
-
 }
 @keyframes typing {
-  0% { width: 0% }
-  100% { width: 100% }
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 100%;
+    }
 }
 
 .card {
@@ -722,13 +785,11 @@ onMounted(async () => {
         align-items: center;
         flex-direction: column;
 
-
-        .image-container{
+        .image-container {
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-
 
             height: 450px;
 
@@ -739,8 +800,7 @@ onMounted(async () => {
                 border-radius: 50px;
             }
 
-
-            svg{
+            svg {
                 position: absolute;
                 z-index: 30;
                 width: 50px;
@@ -755,13 +815,12 @@ onMounted(async () => {
                 background-color: white;
                 padding: 10px;
                 rotate: -20deg;
-                transition: all .3s ease-in-out;
+                transition: all 0.3s ease-in-out;
 
-                &:hover{
+                &:hover {
                     scale: 1.1;
                 }
             }
-
         }
 
         .input {
@@ -780,11 +839,40 @@ onMounted(async () => {
                 outline: 0;
                 color: white;
                 border-bottom: 2px solid white;
-                width: 15ch;;
+                width: 15ch;
 
                 text-align: center;
             }
         }
+    }
+}
+
+.progress {
+    width: 80%;
+    height: 8px;
+    margin-inline: auto;
+    border: 1px solid rgb(252, 252, 252);
+    border-radius: 5px;
+
+    .inner {
+        color: white;
+        height: 100%;
+        background: white;
+    }
+}
+
+.progress-number {
+    margin-top: 10px;
+    color: white;
+    padding-left: 30px;
+    opacity: 0.6;
+}
+
+.overall{
+    margin-top: auto;
+    margin-bottom: 10px;
+    .inner{
+        background-color:orange;
     }
 }
 
