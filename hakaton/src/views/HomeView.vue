@@ -74,6 +74,7 @@ const currentIndex = ref(0);
 const playing = ref(false);
 const currentImage = ref(null);
 const image = ref(null);
+con
 
 const currentWordsArray = computed(() => {
     if (activeCategory.value === "animals") {
@@ -183,6 +184,7 @@ watch(currentWordInput, (newWord) => {
         if (currentIndex.value === currentWordsArray.value?.length - 1) {
             stop();
         }
+
         currentIndex.value++;
         currentWordInput.value = "";
     }
@@ -253,8 +255,8 @@ onMounted(async () => {
         49.2% 92.5%,
         50.8% 91.2%,
         52.5% 89.9%,
-        54.2% 88.7%,
-        55.9% 87.1%,
+        54.2% 88.5%,
+        55.9% 87%,
         57.6% 85.4%,
         59.3% 83.8%,
         61% 82.2%,
