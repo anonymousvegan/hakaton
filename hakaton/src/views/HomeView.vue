@@ -73,8 +73,6 @@
 
     </div>
 
-
-    <Footer />
 </template>
 
 <script setup>
@@ -129,8 +127,14 @@ import glassUrl from "../images/glas.jpeg";
 import mirrorUrl from "../images/mirror.jpeg";
 import doorUrl from "../images/door.jpeg";
 import windowUrl from "../images/window.jpeg";
+import { useToast } from 'vue-toastification';
+
+import fourUrl from "../images/4.jpeg"
+import xUrl from "../images/x.jpeg"
+import minusUrl from "../images/minus.jpeg"
 
 const store = useStore();
+const toast = useToast();
 
 const activeCategory = ref(null);
 const currentIndex = ref(0);
@@ -272,7 +276,7 @@ watch(currentWordInput, async(newWord) => {
 
     if (newWord.toLowerCase() === currentWord.value.toLowerCase()) {
         if (currentIndex.value === currentWordsArray.value?.length - 1) {
-            stop();
+            stop(true);
         }
 
         currentIndex.value++;
@@ -299,20 +303,29 @@ watch(currentIndex, () => {
     store.setProgressForUser(activeCategory.value, currentIndex.value)
 
     if(currentIndex.value === Object.keys(currentWordsArray.value).length){
-        stop();
+        stop(true);
     }
 });
 
-function stop() {
+function stop(showToast) {
+
+    if(showToast) toast.info("Završili ste igru, čestitamo. Svoj napredak imate u denom meniju")
+
     activeCategory.value = "";
     currentIndex.value = 0;
 
     playing.value = false;
 }
 
+watch( (currentImage) => {
+    if(currentImage)
+
+    speakCurrentWord();
+})
+
 onMounted(async () => {
     window.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") stop();
+        if (e.key === "Escape") stop(false);
     });
 });
 
