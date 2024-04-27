@@ -61,8 +61,12 @@ import { ref, computed, watch, onMounted } from "vue";
 import carrotUrl from "../images/carrot.avif";
 import dogUrl from "../images/dog.jpg";
 import appleUrl from "../images/apple.webp";
-import IconEn from "../icons/flags/gb.svg"
 import Volume from "../icons/volume.svg";
+
+import banana from "../images/banana.jpeg"
+import bed from "../images/bed.jpeg"
+import bird from "../images/bird.jpeg"
+
 
 const photos = ref({});
 
@@ -152,6 +156,8 @@ async function getImagesForCurrentWord() {
     const image = getRandomPhoto(currentWord.value);
 
     currentImage.value = image;
+    speakCurrentWord()
+
 }
 
 async function speakCurrentWord(){
