@@ -45,6 +45,7 @@
             </div>
         </teleport>
     </div>
+    <Footer />
 </template>
 
 <script setup>
@@ -199,6 +200,8 @@ onMounted( async () => {
         if(e.key === "Escape") stop();
     })
 })
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
 
 </script>
 

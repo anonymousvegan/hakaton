@@ -48,7 +48,7 @@ async function login() {
             password: password.value,
         });
         router.push("/");
-        Cookies.set(res.data.token);
+        Cookies.set("user_token", res.data.token);
     } catch(error) {
         console.error(error);
     }
