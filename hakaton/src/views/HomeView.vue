@@ -17,9 +17,7 @@
                             :maxlength="currentWord.length"
                             type="text"
                             v-model="currentWordInput"
-                            :style="{
-                                width: currentWord.length + 'ch',
-                            }"
+                            placeholder="Šta vidiš na slici?"
                         />
                     </div>
                 </div>
@@ -157,9 +155,6 @@ async function getImagesForCurrentWord() {
 }
 
 async function speakCurrentWord(){
-    console.log("pričam");
-
-    console.log(currentWord.value);
 
     if (!window.speechSynthesis) {
         console.log("Web Speech API not supported in this browser.");
@@ -183,13 +178,36 @@ async function speakCurrentWord(){
     speechSynthesis.speak(utterance);
 }
 
-watch(currentWordInput, (newWord) => {
+
+async function sleep(s = 100){
+    await new Promise(res => {
+        setTimeout(() => {
+            res()
+        }, s);
+    })
+}
+
+watch(currentWordInput, async(newWord) => {
+
     if (newWord.toLowerCase() === currentWord.value.toLowerCase()) {
         if (currentIndex.value === currentWordsArray.value?.length - 1) {
             stop();
         }
 
         currentIndex.value++;
+        currentWordInput.value = "";
+    }
+    else if(newWord.length === currentWord.value.length){
+
+        image.value.style.transform = "translate(-5px)";
+        await sleep(100);
+        image.value.style.transform = "translate(5px)";
+        await sleep(100);
+        image.value.style.transform = "translate(-5px)";
+        await sleep(100);
+        image.value.style.transform = "translate(5px)";
+        await sleep(100);
+        image.value.style.transform = "translate(0px)";
         currentWordInput.value = "";
     }
 });
@@ -205,13 +223,11 @@ function stop() {
     currentImage.value = "";
     currentIndex.value = 0;
 
-    console.log("game over");
     playing.value = false;
 }
 
 onMounted(async () => {
     window.addEventListener("keydown", (e) => {
-        console.log(e.key);
         if (e.key === "Escape") stop();
     });
 });
@@ -529,6 +545,7 @@ onMounted(async () => {
                 outline: 0;
                 color: white;
                 border-bottom: 2px solid white;
+                width: 15ch;;
 
                 text-align: center;
             }
