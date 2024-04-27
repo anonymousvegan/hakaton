@@ -9,7 +9,7 @@
                     <div class="image-container">
                         <img :src="currentImage" alt="" ref="image" />
 
-                        <IconEn />
+                        <IconEn @click="speakCurrentWord" />
 
                     </div>
 
@@ -175,6 +175,33 @@ async function getImagesForCurrentWord() {
     const image = getRandomPhoto(currentWord.value);
 
     currentImage.value = image;
+}
+
+async function speakCurrentWord(){
+    console.log("pričam");
+
+    console.log(currentWord.value);
+
+    if (!window.speechSynthesis) {
+        console.log("Web Speech API not supported in this browser.");
+        return;
+    }
+
+    // Stop any currently speaking utterance
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(currentWord.value);
+
+    // Optional: Set other properties
+    utterance.pitch = 1; // Range between 0 and 2
+    utterance.rate = 1; // Range between 0.1 and 10
+    utterance.volume = 1; // Range between 0 and 1
+
+    utterance.onstart = () => console.log("Start speaking...");
+    utterance.onend = () => console.log("Finished speaking.");
+    utterance.onerror = (event) => console.log("Error occurred:", event.error);
+
+    speechSynthesis.speak(utterance);
 }
 
 watch(currentWordInput, (newWord) => {
@@ -491,6 +518,7 @@ onMounted(async () => {
                 top: 0;
                 right: 0;
                 transform: translate(15px, -10px);
+                cursor: pointer;
             }
 
         }
