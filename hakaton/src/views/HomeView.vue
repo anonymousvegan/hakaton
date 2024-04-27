@@ -1,7 +1,9 @@
 <template>
     <div class="content card-main">
         <Header />
-
+        <div class="typed-container">
+            <h1 id="typed">Zaronite u čarobni svet boja, oblika i mašte</h1>
+        </div>
         <teleport to="body" v-if="playing">
             <div class="game-dialog">
                 <div class="dialog-content">
@@ -374,6 +376,26 @@ onMounted(async () => {
         background-color: rgba($color: #000000, $alpha: 0.60);
         z-index: -1;
     }
+}
+.typed-container {
+    display: inline-block;
+    margin-left: 55%;
+    margin-top: 15%;
+}
+#typed {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    animation: typing;
+    animation-duration: 3s;
+    //animation-timing-function: steps(40, end);
+    animation-fill-mode: forwards;
+    color: white;
+
+}
+@keyframes typing {
+  0% { width: 0% }
+  100% { width: 100% }
 }
 
 .card {

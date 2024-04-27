@@ -91,6 +91,7 @@ nav {
         .logo{
             width: 25px;
             height: 25px;
+            margin-bottom: 15px;
             img{
                 width: 100%;
                 height: 100%;
@@ -99,7 +100,7 @@ nav {
         }
 
         h1{
-            font-size: 1.5rem;
+            font-size: 2rem;
             color: rgb(255, 255, 255);
         }
     }
