@@ -9,22 +9,28 @@
 
         </div>
         <div class="right">
-            <IconEn
-                v-if="store.language === 'en'"
-                @click="store.language = 'sr'"
-            />
-            <IconSr
-                :src="IconSr"
-                v-if="store.language === 'sr'"
-                @click="store.language = 'en'"
-            />
-            <div class="menu">
-                <i v-if="isLog === false" class="fas fa-power-off" @click="Func"></i>    
-                <i v-if="isLog === true" class="fa-solid fa-user" @click="Func"></i>    
-                <div v-if="isVisible" id="dropdown">
-                    <button @click="logOut">odjavi se</button>
+
+            <template v-if="0">
+                <IconEn
+                    v-if="store.language === 'en'"
+                    @click="store.language = 'sr'"
+                />
+                <IconSr
+                    :src="IconSr"
+                    v-if="store.language === 'sr'"
+                    @click="store.language = 'en'"
+                />
+
+                <div class="menu">
+                    <i v-if="isLog === false" class="fas fa-power-off" @click="Func"></i>
+                    <i v-if="isLog === true" class="fa-solid fa-user" @click="Func"></i>
+                    <div v-if="isVisible" id="dropdown">
+                        <button @click="logOut">odjavi se</button>
+                    </div>
                 </div>
-            </div>
+
+            </template>
+
         </div>
     </nav>
 </template>
@@ -63,6 +69,7 @@ function Func() {
     position: relative;
     > i {
         font-size: 30px;
+        color: rgb(134, 134, 134);
     }
 }
 nav {

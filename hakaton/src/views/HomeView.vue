@@ -1,35 +1,17 @@
 <template>
-    <div class="content">
+    <div class="content card-main">
         <Header />
-        <div class="cards">
-            <div class="card" @click="play('animals')">
-                <div class="wrapper">
-                    <img :src="dogUrl" alt="" />
-
-                    <div class="play">Životinje</div>
-                </div>
-            </div>
-
-            <div class="card" @click="play('vegetables')">
-                <div class="wrapper">
-                    <div class="play">Povrće</div>
-
-                    <img :src="carrotUrl" alt="" />
-                </div>
-            </div>
-
-            <div class="card" @click="play('fruits')">
-                <div class="wrapper">
-                    <div class="play">Voće</div>
-                    <img :src="appleUrl" alt="" />
-                </div>
-            </div>
-        </div>
 
         <teleport to="body" v-if="playing">
             <div class="game-dialog">
                 <div class="dialog-content">
-                    <img :src="currentImage" alt="" ref="image"/>
+
+                    <div class="image-container">
+                        <img :src="currentImage" alt="" ref="image" />
+
+                        <IconEn />
+
+                    </div>
 
                     <div class="input">
                         <input
@@ -45,17 +27,44 @@
             </div>
         </teleport>
     </div>
+
+    <div class="cards">
+        <div class="card" @click="play('animals')">
+            <div class="wrapper">
+                <img :src="dogUrl" alt="" />
+
+                <div class="play">Životinje</div>
+            </div>
+        </div>
+
+        <div class="card" @click="play('vegetables')">
+            <div class="wrapper">
+                <div class="play">Povrće</div>
+
+                <img :src="carrotUrl" alt="" />
+            </div>
+        </div>
+
+        <div class="card" @click="play('fruits')">
+            <div class="wrapper">
+                <div class="play">Voće</div>
+                <img :src="appleUrl" alt="" />
+            </div>
+        </div>
+    </div>
+
+
     <Footer />
 </template>
 
 <script setup>
 import Header from "@/components/Header.vue";
 import axios from "axios";
-import { ref, computed, watch, onMounted, onUnmounted } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import carrotUrl from "../images/carrot.avif";
 import dogUrl from "../images/dog.jpg";
 import appleUrl from "../images/apple.webp";
-// import buttonUrl from "../icons/button.png"
+import IconEn from "../icons/flags/gb.svg"
 
 const photos = ref({});
 
@@ -63,7 +72,7 @@ const activeCategory = ref(null);
 const currentIndex = ref(0);
 const playing = ref(false);
 const currentImage = ref(null);
-const image = ref(null)
+const image = ref(null);
 
 const currentWordsArray = computed(() => {
     if (activeCategory.value === "animals") {
@@ -153,7 +162,7 @@ async function play(category) {
     await getImagesForCurrentWord();
 
     const utterance = new SpeechSynthesisUtterance(this.text);
-    utterance.lang = 'sr-RS'; // Postavljanje jezika na srpski
+    utterance.lang = "sr-RS"; // Postavljanje jezika na srpski
     speechSynthesis.speak(utterance);
 }
 
@@ -193,15 +202,13 @@ function stop() {
     playing.value = false;
 }
 
-onMounted( async () => {
-    window.addEventListener("keydown", (e) =>{
-
+onMounted(async () => {
+    window.addEventListener("keydown", (e) => {
         console.log(e.key);
-        if(e.key === "Escape") stop();
-    })
-})
-import Header from '@/components/Header.vue';
-import Footer from '@/components/Footer.vue';
+        if (e.key === "Escape") stop();
+    });
+});
+
 
 </script>
 
@@ -210,24 +217,73 @@ import Footer from '@/components/Footer.vue';
     margin: 0;
     padding: 0;
 }
-.card-main{
+.card-main {
     clip-path: polygon(
-    0% 0%, 0% 92.5%, 1.7% 93.3%, 3.4% 94.1%, 5.1% 94.9%, 6.8% 95.6%, 
-    8.5% 96.3%, 10.2% 96.8%, 11.9% 97.3%, 13.6% 97.8%, 15.3% 98.3%, 
-    17% 98.7%, 18.7% 99.1%, 20.3% 99.45%, 22% 99.6%, 23.7% 99.7%, 
-    25.4% 99.7%, 27.1% 99.6%, 28.8% 99.455%, 30.5% 99.2%, 32.2% 98.8%, 
-    33.9% 98.5%, 35.6% 98.1%, 37.3% 97.7%, 39% 97.29%, 40.7% 96.8%, 
-    42.4% 96.2%, 44.1% 95.6%, 45.8% 94.7%, 47.5% 93.7%, 49.2% 92.5%, 
-    50.8% 91.2%, 52.5% 89.9%, 54.2% 88.7%, 55.9% 87.1%, 57.6% 85.4%, 
-    59.3% 83.8%, 61% 82.2%, 62.7% 80.8%, 64.4% 79.5%, 66.1% 78.3%, 
-    67.8% 77.3%, 69.5% 76.5%, 71.2% 75.9%, 72.9% 75.4%, 74.6% 75.1%, 
-    76.3% 75%, 78% 75.1%, 79.7% 75.4%, 81.4% 75.9%, 83.1% 76.5%, 
-    84.7% 77.3%, 86.4% 78.3%, 88.1% 79.5%, 89.8% 80.8%, 91.5% 82.2%, 
-    93.2% 83.8%, 94.9% 85.4%, 96.6% 87.1%, 98.3% 88.9%, 100% 90.7%, 
-    100% 0%
-);
-    width:100%;
-    height: 95vh;  
+        0% 0%,
+        0% 92.5%,
+        1.7% 93.3%,
+        3.4% 94.1%,
+        5.1% 94.9%,
+        6.8% 95.6%,
+        8.5% 96.3%,
+        10.2% 96.8%,
+        11.9% 97.3%,
+        13.6% 97.8%,
+        15.3% 98.3%,
+        17% 98.7%,
+        18.7% 99.1%,
+        20.3% 99.45%,
+        22% 99.6%,
+        23.7% 99.7%,
+        25.4% 99.7%,
+        27.1% 99.6%,
+        28.8% 99.455%,
+        30.5% 99.2%,
+        32.2% 98.8%,
+        33.9% 98.5%,
+        35.6% 98.1%,
+        37.3% 97.7%,
+        39% 97.29%,
+        40.7% 96.8%,
+        42.4% 96.2%,
+        44.1% 95.6%,
+        45.8% 94.7%,
+        47.5% 93.7%,
+        49.2% 92.5%,
+        50.8% 91.2%,
+        52.5% 89.9%,
+        54.2% 88.7%,
+        55.9% 87.1%,
+        57.6% 85.4%,
+        59.3% 83.8%,
+        61% 82.2%,
+        62.7% 80.8%,
+        64.4% 79.5%,
+        66.1% 78.3%,
+        67.8% 77.3%,
+        69.5% 76.5%,
+        71.2% 75.9%,
+        72.9% 75.4%,
+        74.6% 75.1%,
+        76.3% 75%,
+        78% 75.1%,
+        79.7% 75.4%,
+        81.4% 75.9%,
+        83.1% 76.5%,
+        84.7% 77.3%,
+        86.4% 78.3%,
+        88.1% 79.5%,
+        89.8% 80.8%,
+        91.5% 82.2%,
+        93.2% 83.8%,
+        94.9% 85.4%,
+        96.6% 87.1%,
+        98.3% 88.9%,
+        100% 90.7%,
+        100% 0%
+    );
+    width: 100%;
+    height: 95vh;
     position: relative;
     background-image: url("../images/back4.jpeg");
     background-repeat: no-repeat;
@@ -236,9 +292,9 @@ import Footer from '@/components/Footer.vue';
         content: "";
         position: absolute;
         inset: 0;
-        background-color: rgba($color: #000000, $alpha: 0.9);
+        background-color: rgba($color: #000000, $alpha: 0.75);
+        z-index: -1;
     }
-    
 }
 
 .card {
@@ -254,6 +310,11 @@ import Footer from '@/components/Footer.vue';
     grid-template-columns: repeat(3, minmax(0, 1fr));
     margin-inline: auto;
     gap: 40px;
+    width: 1500px;
+    margin-top: 20px;
+    z-index: 10;
+    position: relative;
+    margin-bottom: 20px;
 
     .card {
         height: 400px;
@@ -378,13 +439,13 @@ import Footer from '@/components/Footer.vue';
 }
 
 .game-dialog {
-    position: absolute;
+    position: fixed;
     width: 100vw;
     height: 100vh;
     background-color: #000000d6;
     top: 0;
     left: 0;
-
+    z-index: 200;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -393,30 +454,56 @@ import Footer from '@/components/Footer.vue';
 
     .dialog-content {
         width: 1000px;
-        height: 500px;
-        margin-inline: auto;
+        height: 600px;
+        border-radius: 20px;
+        border: 1px solid white;
+        padding: 50px;
 
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
 
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 50px;
+
+        .image-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+
+
+            height: 450px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50px;
+            }
+
+
+            svg{
+                position: absolute;
+                z-index: 30;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                top: 0;
+                right: 0;
+                transform: translate(15px, -10px);
+            }
+
         }
 
         .input {
-            position: absolute;
-            bottom: 100px;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 20px;
 
+            transform: translateY(20px);
+
             input {
-                outline: 1px solid red;
                 height: 40px;
                 font-size: 2rem;
                 background-color: transparent;
@@ -431,28 +518,4 @@ import Footer from '@/components/Footer.vue';
     }
 }
 
-// @keyframes play1{
-//     0% {
-//         rotate: 0deg;
-//     }
-//     50% {
-//         rotate: 5deg;
-//     }
-// }
-// @keyframes play2{
-//     0% {
-//         rotate: 0deg;
-//     }
-//     50% {
-//         rotate: 5deg;
-//     }
-// }
-// @keyframes play3{
-//     0% {
-//         rotate: 0deg;
-//     }
-//     50% {
-//         rotate: 5deg;
-//     }
-// }
 </style>
