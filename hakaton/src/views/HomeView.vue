@@ -61,14 +61,55 @@
 import Header from "@/components/Header.vue";
 import axios from "axios";
 import { ref, computed, watch, onMounted } from "vue";
-import carrotUrl from "../images/carrot.avif";
-import dogUrl from "../images/dog.jpg";
-import appleUrl from "../images/apple.webp";
 import Volume from "../icons/volume.svg";
 
-import banana from "../images/banana.jpeg"
-import bed from "../images/bed.jpeg"
-import bird from "../images/bird.jpeg"
+import carrotUrl from "../images/carrot.avif";
+import pepperUrl from "../images/pepper.jpeg"; 
+import cucumberUrl from "../images/cucumber.jpeg"; 
+import onionUrl from "../images/onion.jpeg";
+import  cabbageUrl from "../images/cabbage.jpeg";
+import  potatoUrl from "../images/potato.jpeg";
+import  green_peasUrl from "../images/green.jpeg";
+import  garlicUrl from "../images/garlic.jpeg"; 
+import  broccoliUrl from "../images/peas.jpeg";
+import  gingerUrl from "../images/ginger.jpg";
+import cherryUrl from "../images/charry.jpeg";
+
+import dogUrl from "../images/dog.jpg";
+import birdUrl from "../images/bird.jpeg"
+import catUrl from "../images/cat.jpeg";
+import horseUrl from "../images/horse.jpeg";
+import goatUrl from "../images/goat.jpeg";
+import pandaUrl from "../images/panda.jpeg";
+import squirrelUrl from "../images/squirrel.jpeg";
+import rabbitUrl from "../images/rabbit.jpeg";
+import cow from "../images/cow.jpeg";
+import fish from "../images/fish.jpeg";
+import chicken from "../images/chicken.jpeg";
+
+
+import appleUrl from "../images/apple.webp";
+import bananaUrl from "../images/banana.jpeg"
+import orangeUrl from "../images/orange.jpeg";
+import peachUrl from "../images/peach.jpg"; 
+import pearUrl from "../images/pear.jpeg";
+import strawberryUrl from "../images/strawberry.jpeg";
+import raspberryUrl from "../images/raspberry.jpeg";
+import blueberryUrl from "../images/blueberry.jpeg";
+import blackberryUrl from "../images/blackberry.jpeg";
+import lemonUrl from "../images/lemon.jpeg";
+
+import bedUrl from "../images/bed.jpeg";
+import houseUrl from "../images/house.jpeg";
+import carUrl from "../images/car.jpeg";
+import schoolUrl from "../images/school.jpeg";
+import tableUrl from "../images/table.jpeg";
+import chairUrl from "../images/chair.jpeg";
+import glassUrl from "../images/glas.jpeg";
+import mirrorUrl from "../images/mirror.jpeg";
+import doorUrl from "../images/door.jpeg"; 
+import windowUrl from "../images/window.jpeg";
+
 
 
 const photos = ref({});
@@ -192,12 +233,6 @@ async function speakCurrentWord(){
 
     speechSynthesis.speak(utterance);
 }
-watch(progress, (newProgress) => {
-    let elem = document.getElementById("progressBar");
-    let wid = 0;
-    wid += progress.value;
-    elem.style.width = wid + "%";
-});
 
 
 async function sleep(s = 100){
