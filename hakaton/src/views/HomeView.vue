@@ -9,8 +9,7 @@
                     <div class="image-container">
                         <img :src="currentImage" alt="" ref="image" />
 
-                        <IconEn @click="speakCurrentWord" />
-
+                        <Volume @click="speakCurrentWord"  />
                     </div>
 
                     <div class="input">
@@ -65,6 +64,7 @@ import carrotUrl from "../images/carrot.avif";
 import dogUrl from "../images/dog.jpg";
 import appleUrl from "../images/apple.webp";
 import IconEn from "../icons/flags/gb.svg"
+import Volume from "../icons/volume.svg";
 
 const photos = ref({});
 
@@ -312,14 +312,14 @@ onMounted(async () => {
     width: 100%;
     height: 95vh;
     position: relative;
-    background-image: url("../images/back4.jpeg");
+    background-image: url("../images/back7.jpeg");
     background-repeat: no-repeat;
     background-size: cover;
     &::before {
         content: "";
         position: absolute;
         inset: 0;
-        background-color: rgba($color: #000000, $alpha: 0.75);
+        background-color: rgba($color: #000000, $alpha: 0.60);
         z-index: -1;
     }
 }
@@ -518,7 +518,17 @@ onMounted(async () => {
                 top: 0;
                 right: 0;
                 transform: translate(15px, -10px);
+                fill: rgb(134, 134, 134);
                 cursor: pointer;
+
+                background-color: white;
+                padding: 10px;
+                rotate: -20deg;
+                transition: all .3s ease-in-out;
+
+                &:hover{
+                    scale: 1.1;
+                }
             }
 
         }
