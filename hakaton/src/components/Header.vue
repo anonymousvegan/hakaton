@@ -19,9 +19,10 @@
                 @click="store.language = 'en'"
             />
             <div class="menu">
-                <i class="fa-solid fa-power-off"></i>
+                <i v-if="isLog === false" class="fas fa-power-off" @click="Func"></i>    
+                <i v-if="isLog === true" class="fa-solid fa-user" @click="Func"></i>    
                 <div v-if="isVisible" id="dropdown">
-                    <button @click="logOut">Odjavi se</button>
+                    <button @click="logOut">odjavi se</button>
                 </div>
             </div>
         </div>
@@ -38,6 +39,8 @@ import Cookies from "js-cookie";
 
 const store = useStore();
 const isVisible = ref(false);
+const isLog = ref(false);
+
 
 function logOut() {
     Cookies.remove("user_token");
@@ -58,10 +61,8 @@ function Func() {
 }
 .menu {
     position: relative;
-    > img {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
+    > i {
+        font-size: 30px;
     }
 }
 nav {

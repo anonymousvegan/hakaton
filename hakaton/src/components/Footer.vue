@@ -8,7 +8,6 @@
 <style scoped> 
     footer{
         display: flex;
-        outline: solid red;
         justify-content: center;
     }
 
