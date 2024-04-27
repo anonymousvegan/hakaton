@@ -19,7 +19,7 @@
                 @click="store.language = 'en'"
             />
             <div class="menu">
-                <img id="pfp" src="../icons/logo.png" alt="" @click="Func">
+                <i class="fa-solid fa-power-off"></i>
                 <div v-if="isVisible" id="dropdown">
                     <button @click="logOut">Odjavi se</button>
                 </div>
