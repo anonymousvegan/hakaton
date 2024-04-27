@@ -2,7 +2,7 @@
     <div class="content card-main">
         <Header />
         <div class="typed-container">
-            <h1 id="typed">Zaronite u čarobni svet boja, oblika i mašte</h1>
+            <h1 id="typed">Zaronite u čarobni svet boja, oblika i mašte.</h1>
         </div>
         <teleport to="body" v-if="playing">
             <div class="game-dialog">
