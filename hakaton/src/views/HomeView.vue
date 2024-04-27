@@ -17,9 +17,7 @@
                             :maxlength="currentWord.length"
                             type="text"
                             v-model="currentWordInput"
-                            :style="{
-                                width: currentWord.length + 'ch',
-                            }"
+                            placeholder="Šta vidiš na slici?"
                         />
                         <div>
                             <div id="progressBar"></div>
@@ -66,8 +64,12 @@ import { ref, computed, watch, onMounted } from "vue";
 import carrotUrl from "../images/carrot.avif";
 import dogUrl from "../images/dog.jpg";
 import appleUrl from "../images/apple.webp";
-import IconEn from "../icons/flags/gb.svg"
 import Volume from "../icons/volume.svg";
+
+import banana from "../images/banana.jpeg"
+import bed from "../images/bed.jpeg"
+import bird from "../images/bird.jpeg"
+
 
 const photos = ref({});
 
@@ -163,12 +165,11 @@ async function getImagesForCurrentWord() {
     const image = getRandomPhoto(currentWord.value);
 
     currentImage.value = image;
+    speakCurrentWord()
+
 }
 
 async function speakCurrentWord(){
-    console.log("pričam");
-
-    console.log(currentWord.value);
 
     if (!window.speechSynthesis) {
         console.log("Web Speech API not supported in this browser.");
@@ -198,13 +199,36 @@ watch(progress, (newProgress) => {
     elem.style.width = wid + "%";
 });
 
-watch(currentWordInput, (newWord) => {
+
+async function sleep(s = 100){
+    await new Promise(res => {
+        setTimeout(() => {
+            res()
+        }, s);
+    })
+}
+
+watch(currentWordInput, async(newWord) => {
+
     if (newWord.toLowerCase() === currentWord.value.toLowerCase()) {
         if (currentIndex.value === currentWordsArray.value?.length - 1) {
             stop();
         }
 
         currentIndex.value++;
+        currentWordInput.value = "";
+    }
+    else if(newWord.length === currentWord.value.length){
+
+        image.value.style.transform = "translate(-5px)";
+        await sleep(100);
+        image.value.style.transform = "translate(5px)";
+        await sleep(100);
+        image.value.style.transform = "translate(-5px)";
+        await sleep(100);
+        image.value.style.transform = "translate(5px)";
+        await sleep(100);
+        image.value.style.transform = "translate(0px)";
         currentWordInput.value = "";
     }
 });
@@ -220,13 +244,11 @@ function stop() {
     currentImage.value = "";
     currentIndex.value = 0;
 
-    console.log("game over");
     playing.value = false;
 }
 
 onMounted(async () => {
     window.addEventListener("keydown", (e) => {
-        console.log(e.key);
         if (e.key === "Escape") stop();
     });
 });
@@ -544,6 +566,7 @@ onMounted(async () => {
                 outline: 0;
                 color: white;
                 border-bottom: 2px solid white;
+                width: 15ch;;
 
                 text-align: center;
             }
