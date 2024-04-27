@@ -26,3 +26,12 @@ if(store.supportedLanguages.includes(currentLang)){
 else{
     store.language = "sr";
 }
+
+const currentProgress = localStorage.getItem("progress")
+
+if(currentProgress){
+    store.progress = JSON.parse(currentProgress);
+}
+else{
+    store.language = "sr";
+}

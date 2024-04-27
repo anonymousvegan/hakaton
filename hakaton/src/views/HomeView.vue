@@ -53,6 +53,24 @@
                 <img :src="appleUrl" alt="" />
             </div>
         </div>
+
+
+        <div class="card" @click="play('objects')">
+            <div class="wrapper">
+                <img :src="houseUrl" alt="" />
+
+                <div class="play">Ostalo</div>
+            </div>
+        </div>
+
+        <!-- <div class="card" @click="play('random')">
+            <div class="wrapper">
+                <img :src="dogUrl" alt="" />
+
+                <div class="play">Životinje</div>
+            </div>
+        </div> -->
+
     </div>
 
 
@@ -61,18 +79,18 @@
 
 <script setup>
 import Header from "@/components/Header.vue";
-import axios from "axios";
 import { ref, computed, watch, onMounted } from "vue";
 import Volume from "../icons/volume.svg";
+import useStore from "@/stores/main";
 
 import carrotUrl from "../images/carrot.avif";
-import pepperUrl from "../images/pepper.jpeg"; 
-import cucumberUrl from "../images/cucumber.jpeg"; 
+import pepperUrl from "../images/pepper.jpeg";
+import cucumberUrl from "../images/cucumber.jpeg";
 import onionUrl from "../images/onion.jpeg";
 import  cabbageUrl from "../images/cabbage.jpeg";
 import  potatoUrl from "../images/potato.jpeg";
 import  green_peasUrl from "../images/green.jpeg";
-import  garlicUrl from "../images/garlic.jpeg"; 
+import  garlicUrl from "../images/garlic.jpeg";
 import  broccoliUrl from "../images/peas.jpeg";
 import  gingerUrl from "../images/ginger.jpg";
 import cherryUrl from "../images/charry.jpeg";
@@ -93,7 +111,7 @@ import chicken from "../images/chicken.jpeg";
 import appleUrl from "../images/apple.webp";
 import bananaUrl from "../images/banana.jpeg"
 import orangeUrl from "../images/orange.jpeg";
-import peachUrl from "../images/peach.jpg"; 
+import peachUrl from "../images/peach.jpg";
 import pearUrl from "../images/pear.jpeg";
 import strawberryUrl from "../images/strawberry.jpeg";
 import raspberryUrl from "../images/raspberry.jpeg";
@@ -109,107 +127,112 @@ import tableUrl from "../images/table.jpeg";
 import chairUrl from "../images/chair.jpeg";
 import glassUrl from "../images/glas.jpeg";
 import mirrorUrl from "../images/mirror.jpeg";
-import doorUrl from "../images/door.jpeg"; 
+import doorUrl from "../images/door.jpeg";
 import windowUrl from "../images/window.jpeg";
 
-
-
-const photos = ref({});
+const store = useStore();
 
 const activeCategory = ref(null);
 const currentIndex = ref(0);
 const playing = ref(false);
-const currentImage = ref(null);
+
 const image = ref(null);
+const currentWordInput = ref("");
 
 const currentWordsArray = computed(() => {
     if (activeCategory.value === "animals") {
-        let arr = [
-            "dog",
-            "cat",
-            "bird",
-            "horse",
-            "goat",
-            "panda",
-            "squirrel",
-            "rabbit",
-            "cow",
-            "fish",
-            "chicken"
-        ];
 
-        return arr;
+        let urls = {
+            dog: dogUrl,
+            bird: birdUrl,
+            cat: catUrl,
+            horse: horseUrl,
+            goat: goatUrl,
+            panda: pandaUrl,
+            squirrel: squirrelUrl,
+            rabbit: rabbitUrl,
+            cow: cow,
+            fish: fish,
+            chicken: chicken,
+        };
+
+        return urls;
     }
 
     if (activeCategory.value === "vegetables") {
-        return ["carrot", "pepper", "cucumber", "onion", "cabbage", "potato", "green peas", "garlic", "broccoli", "ginger"];
+
+        return {
+                carrot: carrotUrl,
+                pepper: pepperUrl,
+                cucumber: cucumberUrl,
+                onion: onionUrl,
+                cabbage: cabbageUrl,
+                potato: potatoUrl,
+                green: green_peasUrl,
+                garlic: garlicUrl,
+                broccoli: broccoliUrl,
+                ginger: gingerUrl,
+                cherry: cherryUrl
+            }
+
     }
 
     if (activeCategory.value === "fruits") {
-        return ["apple", "banana", "orange", "peach", "pear", "strawberry", "raspberry", "blueberry", "blackberry", "lemon"];
+
+        return {
+            apple: appleUrl,
+            banana: bananaUrl,
+            orange: orangeUrl,
+            peach: peachUrl,
+            pear: pearUrl,
+            strawberry: strawberryUrl,
+            raspberry: raspberryUrl,
+            blueberry: blueberryUrl,
+            blackberry: blackberryUrl,
+            lemon: lemonUrl,
+
+        }
+
     }
 
     if (activeCategory.value === "objects") {
-        return ["house", "car", "school", "table", "chair", "bed", "glass", "mirror", "door", "window" ];
+        return {
+            bed: bedUrl,
+            house: houseUrl,
+            car: carUrl,
+            school: schoolUrl,
+            table: tableUrl,
+            chair: chairUrl,
+            glass: glassUrl,
+            mirror: mirrorUrl,
+            door: doorUrl,
+            window: windowUrl,
+        }
     }
 
 });
 
 const currentWord = computed(() => {
-    return currentWordsArray.value?.[currentIndex.value] || "";
+
+
+    if(!currentWordsArray.value) return  "";
+
+    return Object.keys(currentWordsArray.value)[currentIndex.value] || "";
 });
 
-const currentWordInput = ref("");
-const progress = computed(() => {
-    if (isNaN(currentIndex.value) || isNaN(currentWordsArray.value.length)) {
-        return 0; 
-    }
-    return (currentIndex.value / currentWordsArray.value.length) * 100;
-});
+const currentImage = computed(() => {
+    return currentWordsArray.value[currentWord.value];
+})
 
-async function getImages(keyword) {
-    const url = "https://api.unsplash.com/search/photos";
-
-    let res = await axios.get(url, {
-        params: {
-            query: keyword + " " + activeCategory.value,
-            client_id: "e4PUhTgLcJgxCN-kPL0icYOMcVNTh2wtojZxyb2JZNQ",
-        },
-    });
-
-    return res;
-}
-
-function getRandomPhoto(keyword) {
-    const randomNumber = Math.floor(
-        Math.random() * photos.value[keyword].length
-    );
-    return photos.value[keyword][randomNumber];
-}
 
 async function play(category) {
     playing.value = true;
 
     activeCategory.value = category;
 
-    await getImagesForCurrentWord();
+    currentIndex.value = store.progress[category] || 0;
 
-    const utterance = new SpeechSynthesisUtterance(this.text);
-    utterance.lang = "sr-RS"; // Postavljanje jezika na srpski
-    speechSynthesis.speak(utterance);
-}
-
-async function getImagesForCurrentWord() {
-    const images = await getImages(currentWord.value);
-
-    photos.value[currentWord.value] = images.data.results.map(
-        (r) => r.urls.regular
-    );
-    const image = getRandomPhoto(currentWord.value);
-
-    currentImage.value = image;
-    speakCurrentWord()
-
+    speakCurrentWord();
 }
 
 async function speakCurrentWord(){
@@ -273,12 +296,15 @@ watch(currentWordInput, async(newWord) => {
 watch(currentIndex, () => {
     if (!playing.value) return;
 
-    getImagesForCurrentWord();
+    store.setProgressForUser(activeCategory.value, currentIndex.value)
+
+    if(currentIndex.value === Object.keys(currentWordsArray.value).length){
+        stop();
+    }
 });
 
 function stop() {
     activeCategory.value = "";
-    currentImage.value = "";
     currentIndex.value = 0;
 
     playing.value = false;
@@ -415,7 +441,7 @@ onMounted(async () => {
     margin-top: 20px;
     z-index: 10;
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 
     .card {
         height: 400px;
@@ -434,6 +460,13 @@ onMounted(async () => {
 
         &.card:nth-child(3) {
             border-radius: 53% 47% 35% 65% / 46% 43% 57% 54%;
+        }
+
+        &.card:nth-child(4) {
+            position: relative;
+            border-radius: 62% 38% 79% 21% / 42% 46% 54% 58%;
+            left: 200px;
+            top: -70px;
         }
 
         img {
