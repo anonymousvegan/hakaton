@@ -2,7 +2,7 @@
     <div class="content card-main">
         <Header />
         <div class="typed-container">
-            <h1 id="typed">Zaronite u čarobni svet boja, oblika i mašte</h1>
+            <h1 id="typed">Zaronite u čarobni svet boja, <br /> oblika i mašte</h1>
         </div>
         <teleport to="body" v-if="playing">
             <div class="game-dialog">
@@ -418,9 +418,10 @@ onMounted(async () => {
 }
 .typed-container {
     display: inline-block;
-    margin-left: 55%;
-    margin-top: 15%;
+    margin-left: 50%;
+    margin-top:  5%;
 }
+
 #typed {
     overflow: hidden;
     white-space: nowrap;
@@ -430,6 +431,7 @@ onMounted(async () => {
     //animation-timing-function: steps(40, end);
     animation-fill-mode: forwards;
     color: white;
+    font-size: 3rem;
 
 }
 @keyframes typing {
